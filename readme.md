@@ -6,6 +6,7 @@ The purposes is to have a convenient state store that emits an event when it's c
 Platforms:
 + node
 + electron
++ browser [dist/lowstore.min.js](https://raw.githubusercontent.com/tcrowe/lowstore/master/dist/lowstore.min.js)
 + webpack
 
 It uses these powerful lodash functions underneath:
