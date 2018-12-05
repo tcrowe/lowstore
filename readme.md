@@ -67,6 +67,15 @@ store.assign("key1.key2", { five: 5 });
 store.assign({ six: 6 });
 ```
 
+## Why use lowstore?
+
++ The API can be mastered in less than an hour.
++ People complain a lot about the difficulty state libraries.
++ alternative to redux
++ alternative to mobx
++ client/GUI virtual-dom state
++ server memory persistence
+
 ## Copying, license, and contributing
 
 Copyright (C) Tony Crowe <github@tonycrowe.com> (https://tcrowe.github.io) 2018
