@@ -16,11 +16,15 @@ It uses these powerful lodash functions underneath:
 var lowstore = require("lowstore");
 var store = lowstore();
 
+// access the state
+console.log("store.internal", store.internal)
+// {}
+
 //
 // store-change event
 //
 store.on "store-change", function() {
-  console.log("store changed", app.store.internal)
+  console.log("store changed", store.internal)
 });
 
 //
@@ -59,7 +63,6 @@ store.toggle("key1.key2", "val1", "val2");
 //
 // store.assign
 //
-
 store.assign("key1.key2", { five: 5 });
 store.assign({ six: 6 });
 ```
