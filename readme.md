@@ -22,6 +22,17 @@ var lowstore = require("lowstore");
 var store = lowstore();
 ```
 
+## Store members
+
++ **property** `store.internal`
++ **function** [store.get](#storeget) -> `object`
++ **void** [store.set](#storeset) `path`, `val`
++ **void** [store.hset](#storehset) `path`, `subpath`, `val`
++ **void** [store.push](#storepush) `path`, `val`
++ **void** [store.removeIndex](#storeremoveIndex) `path`, `index`
++ **void** [store.toggle](#storetoggle) `path`, `val1`, `val2`
++ **void** [store.assign](#storeassign) `[path]`, `val`
+
 ## Access the state
 
 + **property** `store.internal`
@@ -38,7 +49,7 @@ console.log("store.internal", store.internal)
 It just has one **event**: `store-change`
 
 ```js
-store.on "store-change", function() {
+store.on("store-change", function() {
   console.log("store changed", store.internal)
 });
 ```
@@ -46,15 +57,22 @@ store.on "store-change", function() {
 ## store.get
 
 + **string** `path`
-+ **returns** `object`
 
+**returns** `object` or `undefined`
 
 ```js
 var val = store.get("key1.key2");
-// → undefined
+console.log("val", val);
+// → val === undefined
+
+store.set("key1.key2", "twinkle");
+val = val.get("key1.key2");
+// → val === "twinkle"
 ```
 
-It returns anything that it was `store.set` to.
+It returns anything that it was `store.set` to. If nothing was ever set it returns `undefined`.
+
+There's unlimited nesting: `one.two.three.four.five[6].seven[8]`
 
 See [_.get](https://lodash.com/docs/#get) for how this works.
 
@@ -66,9 +84,14 @@ See [_.get](https://lodash.com/docs/#get) for how this works.
 ```js
 store.set("key1.key2", "hi")
 // → store.internal === { key1: { key2: "hi" } }
+
+var val = store.get("key1.key2");
+// → val === "hi"
 ```
 
 Set `val` to to any type of value. Most of the functions use `store.set` internally.
+
+See [_.set](https://lodash.com/docs/#set) for more.
 
 ## store.hset
 
@@ -79,6 +102,9 @@ Set `val` to to any type of value. Most of the functions use `store.set` interna
 ```js
 store.hset("key1.key2", "key3", "three");
 // → store.internal === { key1: { key2: { key3: "three" } } }
+
+var val = store.get("key1.key2.key3");
+// → val === "three"
 ```
 
 `store.hset` is inspired by Redis' hash set operation. It sets an object property.
@@ -93,6 +119,11 @@ Push an item onto an `Array`.
 ```js
 store.push("key1.key2", "first!");
 // → store.internal === { key1: { key2: ["first!"] } }
+
+
+store.push("key1.key2", "second");
+store.push("key1.key2", "third");
+// → store.internal === { key1: { key2: ["first!", "second", "third"] } }
 ```
 
 ## store.removeIndex
@@ -103,6 +134,9 @@ store.push("key1.key2", "first!");
 Remove `Array` item by `index`.
 
 ```js
+store.push("key1.key2", "first!");
+// → store.internal === { key1: { key2: ["first!"] } }
+//
 store.removeIndex("key1.key2", 0);
 // → store.internal === { key1: { key2: [] } }
 ```
@@ -115,12 +149,26 @@ store.removeIndex("key1.key2", 0);
 
 ```js
 store.toggle("key1.key2", "one", "two");
-// → store.internal === { key1: { key2: "one" } }
+// → store.internal === { key1: { key2: "one" } } <-- val1
+
+store.toggle("key1.key2", "one", "two");
+// → store.internal === { key1: { key2: "two" } } <-- val2
+
+store.toggle("key1.key2", "one", "two");
+// → store.internal === { key1: { key2: "one" } } <-- back to val1
+
+store.toggle("happy")
+// → store.internal === { happy: true, key1: { key2: "one" } } <-- true
+
+store.toggle("happy")
+// → store.internal === { happy: false, key1: { key2: "one" } } <-- false
 ```
 
 + values are optional
 + values can be `Boolean`, `String`, or `Number`
 + no values assumes `Boolean`
+
+It could be modified to do deep object comparisons.
 
 ## store.assign
 
