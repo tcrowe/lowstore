@@ -85,4 +85,4 @@ Thank you for using and contributing to make lowstore better.
 
 ⚠️ Please run `npm run prd` before submitting a patch.
 
-⚖️ lowstore is Free Software protected by the GPL 3.0 license. See [./COPYING](./COPYING) for more information. (free as in freedom)%
+⚖️ lowstore is Free Software protected by the GPL 3.0 license. See [./COPYING](./COPYING) for more information. (free as in freedom)
