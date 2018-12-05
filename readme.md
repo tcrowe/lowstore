@@ -12,8 +12,8 @@ Platforms:
 + webpack
 
 It uses these powerful lodash functions underneath:
-+ [\_.get](https://lodash.com/docs/4.17.4#get)
-+ [\_.set](https://lodash.com/docs/4.17.4#set)
++ [\_.get](https://lodash.com/docs/4.17.11#get)
++ [\_.set](https://lodash.com/docs/4.17.11#set)
 
 ```js
 var lowstore = require("lowstore");
