@@ -25,7 +25,7 @@ var store = lowstore();
 ## Store members
 
 + **property** `store.internal`
-+ **function** [store.get](#storeget) -> `object`
++ **function** [store.get](#storeget) → `object`
 + **void** [store.set](#storeset) `path`, `val`
 + **void** [store.hset](#storehset) `path`, `subpath`, `val`
 + **void** [store.push](#storepush) `path`, `val`
@@ -35,11 +35,11 @@ var store = lowstore();
 
 ## Access the state
 
-+ **property** `store.internal`
++ **object** `store.internal`
 
 ```js
 console.log("store.internal", store.internal)
-// store.internal, {}
+// store.internal {}
 ```
 
 ## Changes
@@ -62,7 +62,6 @@ store.on("store-change", function() {
 
 ```js
 var val = store.get("key1.key2");
-console.log("val", val);
 // → val === undefined
 
 store.set("key1.key2", "twinkle");
