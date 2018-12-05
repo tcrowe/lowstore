@@ -1,0 +1,50 @@
+{
+  "name": "lowstore",
+  "version": "0.1.0",
+  "description": "a simple state store using a few lowdash functions",
+  "author": "Tony Crowe <npm@tonycrowe.com> (https://github.com/tcrowe)",
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/tcrowe/lowstore#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tcrowe/lowstore.git"
+  },
+  "keywords": [
+    "state",
+    "lodash"
+  ],
+  "bugs": {
+    "url": "https://github.com/tcrowe/lowstore/issues"
+  },
+  "main": "dist/index.js",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/register": "^7.0.0",
+    "eslint": "^5.9.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "mocha": "^5.2.0",
+    "npm-run-all": "^4.1.5",
+    "opti-node-watch": "^0.2.0",
+    "prettier": "^1.15.3",
+    "should": "^13.2.3"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "dev-babel": "opti-node-watch -d 500 -w src --exec 'babel -d dist src/**/*.js'",
+    "dev-eslint": "opti-node-watch -d 1000 -w src -w test --exec 'eslint --cache --fix --format unix src test'",
+    "dev-mocha": "opti-node-watch -d 2000 -w src -w test --exec 'mocha'",
+    "dev-app": "opti-node-watch -d 3000 -w src --script dist/index.js",
+    "dev": "run-p dev-*",
+    "test": "mocha",
+    "prd-eslint": "eslint --fix --format unix src",
+    "prd-babel": "NODE_ENV=production babel -d dist src/**/*.js",
+    "prd-prettier": "prettier --write {src,dist,test}/**/*.js",
+    "prd": "run-s clean prd-* test"
+  }
+}
