@@ -3,6 +3,8 @@
 
 The purposes is to have a convenient state store that emits an event when it's changed.
 
+`npm install lowstore`
+
 Platforms:
 + node
 + electron
