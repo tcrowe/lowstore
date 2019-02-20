@@ -1,6 +1,6 @@
 {
   "name": "lowstore",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "a simple state store using a few lowdash functions",
   "author": "Tony Crowe <npm@tonycrowe.com> (https://github.com/tcrowe)",
   "license": "GPL-3.0",
