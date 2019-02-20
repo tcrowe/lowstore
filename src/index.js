@@ -1,6 +1,7 @@
 const get = require("lodash/get");
 const set = require("lodash/set");
 const assign = require("lodash/assign");
+const merge = require("lodash/merge");
 const isNil = require("lodash/isNil");
 const { EventEmitter } = require("events");
 
@@ -108,7 +109,7 @@ function lowstore() {
   };
 
   /**
-   * Assign/merge a value at the path
+   * Assign a value at the path
    * @method assign
    * @param {string} path
    * @param {object} val
@@ -124,6 +125,26 @@ function lowstore() {
 
     val = path;
     store.internal = assign(store.internal, val);
+    store.emit("store-change");
+  };
+
+  /**
+   * Merge a value at the path
+   * @method merge
+   * @param {string} path
+   * @param {object} val
+   * @returns {void}
+   */
+  store.merge = function(path, val) {
+    if (typeof path === "string" && typeof val === "object") {
+      let op = store.get(path) || {};
+      op = merge(op, val);
+      store.set(path, op);
+      return;
+    }
+
+    val = path;
+    store.internal = merge(store.internal, val);
     store.emit("store-change");
   };
 

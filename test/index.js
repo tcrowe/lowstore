@@ -66,4 +66,12 @@ describe("lowstore", function() {
     store.assign("assignText", { assignedSub: "assigned2" });
     intn.assignText.assignedSub.should.be.exactly("assigned2");
   });
+
+  it(".merge", function() {
+    assert.equal(intn.mergeText, undefined);
+    store.merge({ mergeText: "mergeed1" });
+    intn.mergeText.should.be.exactly("mergeed1");
+    store.merge("mergeText", { mergeedSub: "mergeed2" });
+    intn.mergeText.mergeedSub.should.be.exactly("mergeed2");
+  });
 });

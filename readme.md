@@ -32,6 +32,7 @@ var store = lowstore();
 + **void** [store.removeIndex](#storeremoveIndex) `path`, `index`
 + **void** [store.toggle](#storetoggle) `path`, `val1`, `val2`
 + **void** [store.assign](#storeassign) `[path]`, `val`
++ **void** [store.merge](#storemerge) `[path]`, `val`
 
 ## Access the state
 
@@ -171,6 +172,8 @@ It could be modified to do deep object comparisons.
 
 ## store.assign
 
+Performs a shallow object merge. For a deep recursive merge use `store.merge(...)`.
+
 + **string* `path` *optional*
 + **object** `val`
 
@@ -179,6 +182,21 @@ store.assign("key1.key2", { five: 5 });
 // → store.internal === { key1: { key2: { five: 5 } } }
 
 store.assign({ six: 6 });
+// → store.internal === { six: 6, key1: { key2: { five: 5 } } }
+```
+
+## store.merge
+
+[\_.merge](https://lodash.com/docs/#merge) is different from `store.assign` but both are useful. Merge does a deep recursive object merge.
+
++ **string* `path` *optional*
++ **object** `val`
+
+```js
+store.merge("key1.key2", { five: 5 });
+// → store.internal === { key1: { key2: { five: 5 } } }
+
+store.merge({ six: 6 });
 // → store.internal === { six: 6, key1: { key2: { five: 5 } } }
 ```
 
