@@ -24,6 +24,8 @@ var set = require("lodash/set");
 
 var assign = require("lodash/assign");
 
+var merge = require("lodash/merge");
+
 var isNil = require("lodash/isNil");
 
 var _require = require("events"),
@@ -88,6 +90,19 @@ function lowstore() {
 
     val = path;
     store.internal = assign(store.internal, val);
+    store.emit("store-change");
+  };
+
+  store.merge = function(path, val) {
+    if (typeof path === "string" && _typeof(val) === "object") {
+      var op = store.get(path) || {};
+      op = merge(op, val);
+      store.set(path, op);
+      return;
+    }
+
+    val = path;
+    store.internal = merge(store.internal, val);
     store.emit("store-change");
   };
 
